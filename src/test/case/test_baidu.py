@@ -3,15 +3,18 @@ import time
 import unittest
 import os
 from selenium.webdriver.common.by import By
+from src.utils.config import Config , DRIVER_PATH
 
 class TestBaiDu(unittest.TestCase):
-    URL = "https://www.baidu.com/";
+    # URL = "https://www.baidu.com/";
+    URL = Config().get("URL")
     #获取浏览器驱动的存放的目录
-    current_path = os.path.abspath(__file__)  #当前文件的绝对路径
-    current_dir_path = os.path.dirname(current_path)
-    base_path = current_dir_path + "\..\..\.."
-    print('current_dir_path----------',current_dir_path)
-    driver_path = os.path.abspath(base_path + "\drivers\chromedriver.exe")
+    # current_path = os.path.abspath(__file__)  #当前文件的绝对路径
+    # current_dir_path = os.path.dirname(current_path)
+    # base_path = current_dir_path + "\..\..\.."
+    # print('current_dir_path----------',current_dir_path)
+    # driver_path = os.path.abspath(base_path + "\drivers\chromedriver.exe")
+    driver_path = os.path.abspath(DRIVER_PATH + "\chromedriver.exe")
     print('driver_path------',driver_path)
     locator_result = (By.XPATH, '//div[contains(@class, "result")]/h3/a')
 
