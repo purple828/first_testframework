@@ -3,12 +3,14 @@ import time
 import unittest
 import os
 from selenium.webdriver.common.by import By
-from src.utils.config import Config , DRIVER_PATH
+from src.utils.config import Config , DRIVER_PATH , DATA_PATH
 from src.utils.log import logger
+from src.utils.file_reader import ExcelReader
 
 class TestBaiDu(unittest.TestCase):
     # URL = "https://www.baidu.com/";
     URL = Config().get("URL")
+    excel = DATA_PATH + '/baidu.xlsx'
     #获取浏览器驱动的存放的目录
     # current_path = os.path.abspath(__file__)  #当前文件的绝对路径
     # current_dir_path = os.path.dirname(current_path)
@@ -17,13 +19,24 @@ class TestBaiDu(unittest.TestCase):
     # driver_path = os.path.abspath(base_path + "\drivers\chromedriver.exe")
     driver_path = os.path.abspath(DRIVER_PATH + "\chromedriver.exe")
     print('driver_path------',driver_path)
+
+    locator_kw = (By.ID, 'kw')
+    locator_su = (By.ID, 'su')
     locator_result = (By.XPATH, '//div[contains(@class, "result")]/h3/a')
+
 
     def setUp(self):
         self.driver = webdriver.Chrome(self.driver_path)
         self.driver.get(self.URL)
 
     def tearDown(self):
+        self.driver.quit()
+
+    def sub_setUp(self):
+        self.driver = webdriver.Chrome(executable_path=DRIVER_PATH + '\chromedriver.exe')
+        self.driver.get(self.URL)
+
+    def sub_tearDown(self):
         self.driver.quit()
 
     def test_search_0(self):
@@ -52,6 +65,23 @@ class TestBaiDu(unittest.TestCase):
         for link in links:
             # print(link.text)
             logger.info(link.text)
+
+    #   参数化
+    def test_search(self):
+        datas = ExcelReader(self.excel).data
+        logger.info(datas)
+        for d in datas:
+            with self.subTest(data = d):
+                self.sub_setUp()
+                self.driver.find_element(*self.locator_kw).send_keys(d['search'])
+                self.driver.find_element(*self.locator_su).click()
+                time.sleep(2)
+                links = self.driver.find_elements(*self.locator_result)
+                for link in links:
+                    logger.info(link.text)
+                self.sub_tearDown()
+
+
 
 
 

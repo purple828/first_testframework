@@ -8,3 +8,21 @@
 + 4、获取控制台的句柄对象：console_handler = logging.StreamHandler()
      获取日志文件的句柄对象：file_handler = TimedRotatingFileHandler(filename='',when='D',interval=1,backupCount=,delay=True,encoding='utf-8')
      句柄应该设置formatter（日志输出格式）、level（日志等级），最后将句柄添加到日志对象中
+     
++ 5、xlrd库中读取excel中sheet的内容时，title_line参数，用来声明是否在excel表格里有标题行，如果有标题行，返回dict列表，否则返回list列表，如下
+        excel表格如下:
+        
+        | title1 | title2 |
+        | value1 | value2 |
+        | value3 | value4 |
+        
+        # 如果title_line=True
+        [{"title1": "value1", "title2": "value2"}, {"title1": "value3", "title2": "value4"}]
+        
+        # 如果title_line=False
+        [["title1", "title2"], ["value1", "value2"], ["value3", "value4"]]
+        
+        
+        
+       
+       
