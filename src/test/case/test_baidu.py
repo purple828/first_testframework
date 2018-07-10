@@ -4,6 +4,7 @@ import unittest
 import os
 from selenium.webdriver.common.by import By
 from src.utils.config import Config , DRIVER_PATH
+from src.utils.log import logger
 
 class TestBaiDu(unittest.TestCase):
     # URL = "https://www.baidu.com/";
@@ -49,7 +50,8 @@ class TestBaiDu(unittest.TestCase):
         time.sleep(2)
         links = self.driver.find_elements(*self.locator_result)
         for link in links:
-            print(link.text)
+            # print(link.text)
+            logger.info(link.text)
 
 
 

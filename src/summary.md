@@ -4,3 +4,7 @@
 + 2、若将配置信息从逻辑代码中抽取到配置文件时，需要先封装一个YamlReader对象，然后建一个读取配置文件内容的Config类； 
 
 + 3、logging日志级别等级CRITICAL > ERROR > WARNING > INFO > DEBUG > NOTSET，默认的日志级别设置为WARNING，默认的日志格式为日志级别：Logger名称：用户输出消息。
+
++ 4、获取控制台的句柄对象：console_handler = logging.StreamHandler()
+     获取日志文件的句柄对象：file_handler = TimedRotatingFileHandler(filename='',when='D',interval=1,backupCount=,delay=True,encoding='utf-8')
+     句柄应该设置formatter（日志输出格式）、level（日志等级），最后将句柄添加到日志对象中
