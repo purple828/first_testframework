@@ -22,7 +22,9 @@
         # 如果title_line=False
         [["title1", "title2"], ["value1", "value2"], ["value3", "value4"]]
         
-        
-        
-       
-       
++ 6、在Pycharm软件中使用Python ，HTMLTestRunner 生成测试报告时，遇到很奇怪的问题，明明运行的结果，没有任何报错，就是不生成测试报告。
+      原因是编辑器为了方便用户执行测试，都有一项功能，可以用编辑器来调用unittest或者nose来执行测试用例，这种情况下，执行的只是用例或者套件，而不是整个文件，写在main里的代码是不会被执行的！！自然无法生成测试报告。
+      解决方法：
+      
+      #原: if __name__ == '__main__':
+       后：if __name__ == 'interface_demo':把main修改成自己的文件名就可以了
