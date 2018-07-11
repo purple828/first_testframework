@@ -13,11 +13,11 @@ class Config:
 
     def __init__(self,config=CONFIG_FILE):
         self.config = YamlReader(config).data
-        print("self.config---------------",self.config)
+        # print("self.config---------------",self.config)
 
 
     def get(self,element,index=0):
-        print("self.config[index].get(element)-----------",self.config[index].get(element))
+        # print("self.config[index].get(element)-----------",self.config[index].get(element))
         return self.config[index].get(element)
 
 
