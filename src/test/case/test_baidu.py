@@ -8,6 +8,8 @@ from src.utils.log import logger
 from src.utils.file_reader import ExcelReader
 from src.utils.HTMLTestRunner import HTMLTestRunner
 from src.utils.mail import Email
+from src.test.page.baidu_result_page import BaiDuResultPage
+from src.test.page.baidu_main_page import BaiDuMainPage
 
 class TestBaiDu(unittest.TestCase):
     # URL = "https://www.baidu.com/";
@@ -42,6 +44,12 @@ class TestBaiDu(unittest.TestCase):
 
     def sub_tearDown(self):
         self.driver.quit()
+
+    def sub_setUp_po(self):
+        self.page = BaiDuMainPage(browser_type='chrome').get(self.URL,maximize_window=False)
+
+    def sub_tearDown_po(self):
+        self.page.quit()
 
     # def test_search_0(self):
     #     self.driver.find_element(By.ID,"kw").send_keys("python")
@@ -86,13 +94,33 @@ class TestBaiDu(unittest.TestCase):
                 self.sub_tearDown()
 
 
+    #使用PO思想后对test_search方法进行改造
+    def test_search_po(self):
+        datas = ExcelReader(self.excel).data
+        for d in datas:
+            with self.subTest(data=d):
+                self.sub_setUp_po()
+                self.page.search(d['search'])
+                time.sleep(2)
+                self.page = BaiDuResultPage(self.page)  #页面跳转到result页面
+                links = self.page.result_links
+                for link in links:
+                    logger.info(link.text)
+                self.sub_tearDown_po()
+
+
+
+
+
+
 # if __name__ == "__main__":
 if __name__ == 'test_baidu':
     report = REPORT_PATH + r'\report.html'
     print('report----------',report)
     with open(report,'wb') as f:
         runner = HTMLTestRunner(f,verbosity=2,title='从0搭建测试框架 灰蓝',description='修改html报告')
-        runner.run(TestBaiDu('test_search'))
+        # runner.run(TestBaiDu('test_search'))
+        runner.run(TestBaiDu('test_search_po'))
     # unittest.main()
 
     emailInfo = Config().get("email")
