@@ -5,3 +5,8 @@ log:
     console_level: WARNING
     file_level: DEBUG
     pattern: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+email:
+  sender: 944974531@qq.com
+  receivers: fanglijuan@baibu.la
+  password:
+  smtp_server: smtp.qq.com

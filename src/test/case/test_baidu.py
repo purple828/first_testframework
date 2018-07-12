@@ -7,11 +7,14 @@ from src.utils.config import Config , DRIVER_PATH , DATA_PATH , REPORT_PATH
 from src.utils.log import logger
 from src.utils.file_reader import ExcelReader
 from src.utils.HTMLTestRunner import HTMLTestRunner
+from src.utils.mail import Email
 
 class TestBaiDu(unittest.TestCase):
     # URL = "https://www.baidu.com/";
-    URL = Config().get("URL")
+    URL =  Config().get("URL")
     excel = DATA_PATH + '/baidu.xlsx'
+
+
     #获取浏览器驱动的存放的目录
     # current_path = os.path.abspath(__file__)  #当前文件的绝对路径
     # current_dir_path = os.path.dirname(current_path)
@@ -91,6 +94,21 @@ if __name__ == 'test_baidu':
         runner = HTMLTestRunner(f,verbosity=2,title='从0搭建测试框架 灰蓝',description='修改html报告')
         runner.run(TestBaiDu('test_search'))
     # unittest.main()
+
+    emailInfo = Config().get("email")
+    sender = emailInfo.get('sender') if emailInfo and emailInfo.get('sender') else '944974531@qq.com'
+    receivers = emailInfo.get('receivers') if emailInfo and emailInfo.get('receivers') else 'fanglijuan@baibu.la'
+    password = emailInfo.get('password') if emailInfo and emailInfo.get('password') else '***'
+    smtp_server = emailInfo.get('smtp_server') if emailInfo and emailInfo.get('smtp_server') else 'smtp.qq.com'
+
+    e = Email(title='百度搜索测试报告',message='我悄无声息地删了某人',
+              receiver= receivers,
+              server= smtp_server,
+              sender=sender,
+              password=password,
+              path=report
+              )
+    e.send()
 
 
 

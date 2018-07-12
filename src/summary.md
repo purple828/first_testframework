@@ -28,3 +28,15 @@
       
       #原: if __name__ == '__main__':
        后：if __name__ == 'interface_demo':把main修改成自己的文件名就可以了
+       
++ 7、MIME邮件Content-Type域常见的主类型：text、image、application、multipart；
+     对于multipart类型，下面有三种子类型：mixed、alternative、related
+     multipart/mixed可以包含附件。
+     
+     multipart/related可以包含内嵌资源。
+
+     multipart/alternative 纯文本与超文本共存
+     
+     发送邮件时需要设置发送邮件的账号能支持smtp发送，并获取唯一的专属密码
+
+
