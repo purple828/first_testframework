@@ -35,10 +35,12 @@ class Browser(object):
     def save_screen_shot(self,name='screen_shot'):
         day = time.strftime('%Y%m%d',time.localtime(time.time()))
         screenshot_path = REPORT_PATH + '\screenshot_%s'%day
+        print('screenshot_path--------------',screenshot_path)
         if not os.path.exists(screenshot_path):
             os.makedirs(screenshot_path)
         tm = time.strftime('%H%M%S',time.localtime(time.time()))
         screenshot = self.driver.save_screenshot(screenshot_path+'\\%s_%s.png'%(name,tm))
+        print('screenshot------------------------------------',screenshot)
         return screenshot
 
     def close(self):

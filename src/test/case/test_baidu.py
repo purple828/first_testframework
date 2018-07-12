@@ -103,6 +103,7 @@ class TestBaiDu(unittest.TestCase):
                 self.page.search(d['search'])
                 time.sleep(2)
                 self.page = BaiDuResultPage(self.page)  #页面跳转到result页面
+                self.page.save_screen_shot()
                 links = self.page.result_links
                 for link in links:
                     logger.info(link.text)
